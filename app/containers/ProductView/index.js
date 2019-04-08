@@ -17,6 +17,7 @@ import Slider from 'components/Slider';
 import Accordion from 'components/Accordion';
 import HashTag from 'components/HashTag';
 import StatefulLink from 'components/StatefulLink';
+import BreadCrumb from 'components/Breadcrumb';
 import { dataChecking } from 'globalUtils';
 
 import makeSelectProductView from './selectors';
@@ -77,13 +78,12 @@ export class ProductView extends React.PureComponent { // eslint-disable-line re
 
     buildReview(reviews) {
         if (reviews) {
-            return reviews.items.map((review) =>
-            (
-                <li className="review" key={review.id}>
+            return reviews.items.map((review) => (
+                <div className="review" key={review.id}>
                     <div className="review-name">{review.username}</div>
                     <div>{review.rating} rating</div>
                     <div className="review-comment">{review.comment}</div>
-                </li>
+                </div>
             ));
         }
         return (
@@ -108,6 +108,9 @@ export class ProductView extends React.PureComponent { // eslint-disable-line re
         if (product) {
             return (
                 <div className="product-panel">
+                    <div className="breadcrumb-panel">
+                        <BreadCrumb paths={product.breadcrumbs} />
+                    </div>
                     <div className="product-image-panel">
                         <img className="product-image" src={product.image.large} alt={product.extra_name} />
                     </div>
@@ -122,10 +125,9 @@ export class ProductView extends React.PureComponent { // eslint-disable-line re
                             <div className="name">{product.name}</div>
                         </div>
                     </div>
-                    <HashTag className="hashtags-panel" tags={product.hashtags || []} />
+                    <HashTag className="hashtags-panel" tags={product.hashtags} />
                     <div className="action-panel">
                         <div className="wishlist-btn">
-                            {/* Further update for wishlist checking */}
                             <i className={`${true ? 'far' : 'fas'} fa-heart`} />
                         </div>
                         <div className="add-to-cart-button">
@@ -158,8 +160,8 @@ export class ProductView extends React.PureComponent { // eslint-disable-line re
 
                 <Accordion
                     className="accordion-panel"
-                    active_icon="-"
-                    inactive_icon="+"
+                    active_icon={<i className="fas fa-minus"></i>}
+                    inactive_icon={<i className="fas fa-plus"></i>}
                     height_threshold="220px"
                     contents={[
                         {
@@ -190,32 +192,32 @@ export class ProductView extends React.PureComponent { // eslint-disable-line re
 
                 <div className="content-panel">
                     <hr className="splitter bold" />
-                    <Slider className="reviews-panel" title="Top Reviews">
-                        {
-                            this.buildReview(reviews)
-                        }
-                    </Slider>
+                    <Slider
+                        className="reviews-panel"
+                        title="Top Reviews"
+                        contents={this.buildReview(reviews)}
+                    />
 
                     <hr className="splitter bold" />
-                    <Slider className="bought-together-panel" title="Frequently Bought Together">
-                        {
-                            this.buildFrequentlyBuy()
-                        }
-                    </Slider>
+                    <Slider
+                        className="bought-together-panel"
+                        title="Frequently Bought Together"
+                        contents={this.buildFrequentlyBuy()}
+                    />
 
                     <hr className="splitter bold" />
-                    <Slider className="related-items-panel" title="Related to items you viewed">
-                        {
-                            this.buildRelatedItems()
-                        }
-                    </Slider>
+                    <Slider
+                        className="related-items-panel"
+                        title="Related to items you viewed"
+                        contents={this.buildRelatedItems()}
+                    />
 
                     <hr className="splitter bold" />
-                    <Slider className="customer-bought-panel" title="Customers who bought this item also bought">
-                        {
-                            this.buildCustomerBought()
-                        }
-                    </Slider>
+                    <Slider
+                        className="customer-bought-panel"
+                        title="Customers who bought this item also bought"
+                        contents={this.buildCustomerBought()}
+                    />
                 </div>
             </div>
         );

@@ -9,16 +9,9 @@ injectGlobal`
     body {
         height: 100%;
         width: 100%;
-        overflow-y: scroll;
     }
 
-    body {
-        font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    }
-
-    body.fontLoaded {
-        font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    }
+    body { font-family: "Poppins", sans-serif; }
 
     #app {
         background-color: #fafafa;
